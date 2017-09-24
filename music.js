@@ -1,3 +1,4 @@
+//collaborate with Adrian and Eden
 const musicInfo = [];
 
 function addSongFromField(event) {
@@ -30,7 +31,26 @@ function renderList() {
 }
 
 $('#getPlaylistBtn').click(function (event) {
-  // TODO: Display a list of music.
-  // You may use anything from musicInfo.
+  var iTunesURL = 'https://itunes.apple.com/search'
+  for (var i = 0; i < musicInfo.length; i++) {
+    var musicKeyword = musicInfo[i];
+    let iTunesOptions = { 
+      term: musicKeyword,
+      limit: 5,
+      format: "json"
+    };
+// JSON call for API + data function
+   $.getJSON( iTunesURL, iTunesOptions, function(data){
+        $.each(data.results, function(i,result) {
+          console.log("Music Genie Working...");
+          var newItem = "<p>";
+          newItem += result.artistName + ": " + result.trackName + "</p>";
+          $("#results").append(newItem);
+        })
+      }
+    )
+  };
   console.log('Testing Music Call');
 });
+
+
